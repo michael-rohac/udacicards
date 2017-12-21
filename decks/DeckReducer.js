@@ -11,13 +11,12 @@ export const UPDATE_DECK = 'UPDATE_DECK'
 export function decks(state = {}, action) {
     switch (action.type) {
         case FETCH_DECKS:
-            debugger
             return {
                 ...state,
                 ...action.decks
             }
         case ADD_DECK:
-            const deckId = nameToId(action.deck.title);
+            const deckId = nameToId(action.deck.title)
             return {
                 ...state,
                 [deckId]: {

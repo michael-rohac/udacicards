@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import {StyleSheet, Text, View, Dimensions, StatusBar} from 'react-native'
+import {Dimensions, StatusBar, StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux'
 
 import styling from '../utils/styling'
@@ -12,7 +12,7 @@ class Deck extends React.Component {
     render() {
         const {deck, cards, deckComponent} = this.props
         return (
-            <View style={styles.deck}>
+            <View style={styles.deck} onPress={() => console.log("Deck pressed")}>
                 <Text style={styles.title}>{deck.title}</Text>
                 <Text style={styles.subtitle}>{`${cards} card${cards > 1 ? 's' : ''}`}</Text>
                 {deckComponent && deckComponent(deck)}
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     deck: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#80e8ff',
+        backgroundColor: styling.deckBackgroundColor,
         marginTop: styling.deckSpacing,
         height: deckHeight(),
         borderBottomWidth: 2,

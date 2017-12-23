@@ -5,8 +5,6 @@ import {LogerFactory, LOGGER_DEBUG} from "../utils/logger";
 
 export const FETCH_CARDS = 'FETCH_CARDS'
 export const ADD_CARD = 'ADD_CARD'
-export const REMOVE_CARD = 'REMOVE_CARD'
-export const UPDATE_CARD = 'UPDATE_CARD'
 
 const logger = LogerFactory(LOGGER_DEBUG)
 

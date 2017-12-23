@@ -1,17 +1,20 @@
 import React from 'react';
 import {combineReducers, createStore} from 'redux'
 import {Provider} from 'react-redux'
-import {StyleSheet, View, Text, StatusBar} from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {TabNavigator} from 'react-navigation'
 
-import {removeReduxStateFromAsyncStorage, getReduxStateFromAsyncStorage, syncReduxStateWithAsyncStorage} from './utils/helpers'
+import {
+    getReduxStateFromAsyncStorage, removeReduxStateFromAsyncStorage,
+    syncReduxStateWithAsyncStorage
+} from './utils/helpers'
 import {LogerFactory, LOGGER_DEBUG} from './utils/logger'
 
 import {decks} from './decks/DeckReducer'
 import {cards} from './cards/CardReducer'
 import {fetchDecks} from './decks/DeckActions'
 import {fetchCards} from './cards/CardActions'
-import DeckList from './decks/DeckList'
+import DeckRouter from './decks/DeckRouter'
 import styling from './utils/styling'
 
 const logger = LogerFactory(LOGGER_DEBUG)
@@ -21,9 +24,7 @@ store.subscribe(() => syncReduxStateWithAsyncStorage(store.getState()))
 
 removeReduxStateFromAsyncStorage()
 
-const customDecksComponent = () => <Text>custom decks component</Text>
-const customCardsComponent = () => <Text>custom cards component</Text>
-const customQuizesComponent = () => <Text>custom quizes component</Text>
+const newDeckView = () => <Text>New Deck View</Text>
 
 const styles = StyleSheet.create({
     container: {
@@ -45,25 +46,18 @@ const styles = StyleSheet.create({
     }
 });
 
-const Tabs = TabNavigator({
+const MainNavigator = TabNavigator({
     DECKS: {
-        screen: () => <DeckList deckComponent={customDecksComponent}/>,
+        screen: () => <DeckRouter/>,
         navigationOptions: {
             tabBarLabel: 'DECKS',
             style: styles.tabStyle
         }
     },
-    CARDS: {
-        screen: () => <DeckList deckComponent={customCardsComponent}/>,
+    NEW_DECK: {
+        screen: newDeckView,
         navigationOptions: {
-            tabBarLabel: 'CARDS',
-            style: styles.tabStyle
-        }
-    },
-    QUIZES: {
-        screen: () => <DeckList deckComponent={customQuizesComponent}/>,
-        navigationOptions: {
-            tabBarLabel: 'QUIZES',
+            tabBarLabel: 'NEW DECK',
             style: styles.tabStyle
         }
     }
@@ -91,7 +85,7 @@ export default class App extends React.Component {
         return (
             <Provider store={store}>
                 <View style={[styles.container, {marginTop: StatusBar.currentHeight}]}>
-                    <Tabs/>
+                    <MainNavigator/>
                 </View>
             </Provider>
         );

@@ -2,7 +2,7 @@
  * © 2017 Michal Rohac, All Rights Reserved.
  */
 import React from 'react'
-import {FlatList, StyleSheet, View, Text, StatusBar} from 'react-native'
+import {FlatList, View} from 'react-native'
 import {connect} from 'react-redux'
 import Deck from './Deck'
 import styling from "../utils/styling";

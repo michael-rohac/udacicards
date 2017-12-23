@@ -1,11 +1,12 @@
 /**
  * © 2017 Michal Rohac, All Rights Reserved.
  */
-// styling constants
+import * as Colors from './colors'
+
 export default {
     tabNavigationHeight: 60,
     numberOfDecks: 4,
     deckSpacing: 3,
-    deckBackgroundColor: '#80e8ff',
+    deckBackgroundColor: Colors.ligthBlue,
     defaultFontSize: 14
 }

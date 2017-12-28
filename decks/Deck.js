@@ -3,38 +3,43 @@
  */
 
 import React from 'react'
-import {Dimensions, StatusBar, StyleSheet, Text, View} from 'react-native'
+import {Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {connect} from 'react-redux'
-
 import styling from '../utils/styling'
+import * as Colors from '../utils/colors'
 
 class Deck extends React.Component {
     render() {
-        const {deck, cards, deckComponent} = this.props
+        const {deck, cards, deckComponent, onPressHandler, numberOfDecksOnPage} = this.props
         return (
-            <View style={styles.deck} onPress={() => console.log("Deck pressed")}>
-                <Text style={styles.title}>{deck.title}</Text>
-                <Text style={styles.subtitle}>{`${cards} card${cards > 1 ? 's' : ''}`}</Text>
-                {deckComponent && deckComponent(deck)}
-            </View>
+            <TouchableOpacity
+                style={[styles.deck, {height: deckHeight(numberOfDecksOnPage || styling.defaultNumberOfDecks)}]}
+                onPress={() => this.props.onPressHandler && onPressHandler(deck)}>
+                <View>
+                    <Text style={styles.title}>{deck.title}</Text>
+                    <Text style={styles.subtitle}>{`${cards} card${cards > 1 ? 's' : ''}`}</Text>
+                </View>
+                {deckComponent && (
+                    <View style={styles.deckComponent}>
+                        {deckComponent(deck)}
+                    </View>
+                )}
+            </TouchableOpacity>
         )
     }
 }
 
-function mapStateToProps({decks, cards}, props) {
+function mapStateToProps({cards}, props) {
+    const {deck} = props
     return {
-        deck: decks && props.id && decks[props.id] ? decks[props.id] : {
-            id: props.id,
-            title: "Unknown Deck"
-        },
-        cards: cards && props.id && cards[props.id] ? cards[props.id].length : 0
+        cards: cards && deck.id && cards[deck.id] ? cards[deck.id].length : 0
     }
 }
 
 export default connect(mapStateToProps)(Deck)
 
-function deckHeight() {
-    return (Dimensions.get('window').height - StatusBar.currentHeight - styling.tabNavigationHeight - styling.deckSpacing * styling.numberOfDecks) / styling.numberOfDecks
+function deckHeight(numberOfDecks) {
+    return (Dimensions.get('window').height - StatusBar.currentHeight - styling.tabNavigationHeight - styling.deckSpacing * numberOfDecks) / numberOfDecks
 }
 
 const styles = StyleSheet.create({
@@ -43,7 +48,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: styling.deckBackgroundColor,
         marginTop: styling.deckSpacing,
-        height: deckHeight(),
         borderBottomWidth: 2,
 
         shadowColor: 'rgba(0, 0, 0, 0.24)',
@@ -56,10 +60,16 @@ const styles = StyleSheet.create({
 
     },
     title: {
-        fontSize: styling.defaultFontSize + 2,
-        fontWeight: 'bold'
+        fontSize: styling.defaultFontSize + 4,
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     subtitle: {
-        color: '#808080',
+        fontSize: styling.defaultFontSize + 2,
+        color: Colors.gray,
+        textAlign: 'center'
+    },
+    deckComponent: {
+        marginTop: 20
     }
 })

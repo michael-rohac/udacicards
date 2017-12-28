@@ -7,7 +7,9 @@ import {StackNavigator} from 'react-navigation'
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import {black, gray, white} from '../utils/colors'
 
+import * as RoutingConstants from './RoutingConstants'
 import DeckList from './DeckList'
+import DeckView from './DeckView'
 import AndroidButton from '../components/AndroidButton'
 
 export default () => {
@@ -23,22 +25,10 @@ const styles = StyleSheet.create({
 })
 
 const DecksNavigator = StackNavigator({
-    DeckList: {
+    [RoutingConstants.DECK_LIST_VIEW]: {
         screen: ({navigation}) =>
             <View style={{flex: 1}}>
-                <DeckList deckComponent={(deck) =>
-                    <View style={{flexDirection: 'row'}}>
-                        <AndroidButton
-                            icon={<MaterialCommunityIcons name='playlist-plus' size={20}/>}
-                            text={`Add Card`}
-                            onPress={() => navigation.navigate('DeckView', {...deck})}/>
-                        <AndroidButton
-                            icon={<MaterialCommunityIcons name='play-circle-outline' size={20}/>}
-                            text={`Start Quiz`}
-                            onPress={() => navigation.navigate('QuizView', {...deck})}/>
-
-                    </View>
-                }/>
+                <DeckList onPressHandler={(deck) => navigation.navigate(RoutingConstants.DECK_VIEW, {deck})} />
             </View>,
         navigationOptions: {
             title: 'Deck List',
@@ -49,19 +39,28 @@ const DecksNavigator = StackNavigator({
             headerPressColorAndroid: gray
         }
     },
-    DeckView: {
-        screen: ({navigation}) => <View><Text>{navigation.state.params.title} Cards</Text></View>,
+    [RoutingConstants.DECK_VIEW]: {
+        screen: ({navigation}) => <DeckView navigation={navigation} deck={navigation.state.params.deck}/>,
         navigationOptions: ({navigation}) => ({
-            title: `${navigation.state.params.title}`,
+            title: `${navigation.state.params.deck.title}`,
             headerStyle: styles.navigationHeader,
             headerTintColor: white,
             headerPressColorAndroid: gray
         })
     },
-    QuizView: {
+    [RoutingConstants.DECK_CARD_VIEW]: {
+        screen: () => <View><Text>Card View</Text></View>,
+        navigationOptions: ({navigation}) => ({
+            title: `Add ${navigation.state.params.deck.title} Card`,
+            headerStyle: styles.navigationHeader,
+            headerTintColor: white,
+            headerPressColorAndroid: gray
+        })
+    },
+    [RoutingConstants.QUIZ_VIEW]: {
         screen: () => <View><Text>Quiz View</Text></View>,
         navigationOptions: ({navigation}) => ({
-            title: `${navigation.state.params.title} Quiz`,
+            title: `${navigation.state.params.deck.title} Quiz`,
             headerStyle: styles.navigationHeader,
             headerTintColor: white,
             headerPressColorAndroid: gray

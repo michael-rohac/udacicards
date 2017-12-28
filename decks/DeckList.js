@@ -9,20 +9,23 @@ import styling from "../utils/styling";
 
 class DeckList extends React.Component {
     render() {
-        const {decks, deckComponent} = this.props
+        const {decks, onPressHandler} = this.props
         const renderDeck = ({item}) => {
             return (
-                <Deck id={item.key} deckComponent={deckComponent}/>
+                <Deck deck={item} onPressHandler={onPressHandler}/>
             )
         }
         return (
             <View style={{flex: 1}}>
                 <View style={{marginTop: styling.deckSpacing}}></View>
-                <FlatList data={decks} renderItem={renderDeck} contentContainerStyle={{
-                    flex: 1,
-                    alignItems: 'stretch',
-                    justifyContent: 'flex-start'
-                }}/>
+                <FlatList data={decks}
+                          keyExtractor={(deck) => deck.id}
+                          renderItem={renderDeck}
+                          contentContainerStyle={{
+                              flex: 1,
+                              alignItems: 'stretch',
+                              justifyContent: 'flex-start'
+                          }}/>
             </View>
         )
     }
@@ -30,7 +33,7 @@ class DeckList extends React.Component {
 
 function mapStateToProps({decks}) {
     return {
-        decks: decks ? Object.keys(decks).map(deck => ({key: deck})) : []
+        decks: decks ? Object.keys(decks).map(deckId => decks[deckId]) : []
     }
 }
 

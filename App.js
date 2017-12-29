@@ -1,7 +1,7 @@
 import React from 'react';
 import {combineReducers, createStore} from 'redux'
 import {Provider} from 'react-redux'
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import {TabNavigator} from 'react-navigation'
 
 import {
@@ -16,6 +16,7 @@ import {quizes} from './quizes/QuizReducer'
 import {fetchDecks} from './decks/DeckActions'
 import {fetchCards} from './cards/CardActions'
 import DeckRouter from './decks/DeckRouter'
+import NewDeckView from './decks/NewDeckView'
 import styling from './utils/styling'
 
 const logger = LogerFactory(LOGGER_DEBUG)
@@ -24,8 +25,6 @@ const store = createStore(reducer);
 store.subscribe(() => syncReduxStateWithAsyncStorage(store.getState()))
 
 removeReduxStateFromAsyncStorage()
-
-const newDeckView = () => <Text>New Deck View</Text>
 
 const styles = StyleSheet.create({
     container: {
@@ -56,7 +55,7 @@ const MainNavigator = TabNavigator({
         }
     },
     NEW_DECK: {
-        screen: newDeckView,
+        screen: NewDeckView,
         navigationOptions: {
             tabBarLabel: 'NEW DECK',
             style: styles.tabStyle

@@ -3,27 +3,24 @@
  */
 
 import React from 'react'
+import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {StyleSheet} from 'react-native'
 import {StackNavigator} from 'react-navigation'
+import * as QuizActions from './QuizActions'
 import QuizQuestionView from './QuizQuestionView'
 import QuizResultView from './QuizResultView'
-import styling from '../utils/styling'
 import * as RoutingConstants from './RoutingConstants'
 
 class QuizView extends React.Component {
-    render() {
-        const {cards} = this.props
-        return (
-            <QuizNavigator screenProps={{cards}}/>
-        )
+    componentDidMount() {
+        const {deck, resetQuiz} = this.props
+        resetQuiz(deck.id)
     }
-}
-
-function mapStateToProps({cards}, props) {
-    const {deck} = props
-    return {
-        cards: cards && deck.id && cards[deck.id] ? cards[deck.id].length : 0
+    render() {
+        const {cards, deck} = this.props
+        return (
+            <QuizNavigator screenProps={{deck, cards}}/>
+        )
     }
 }
 
@@ -34,23 +31,12 @@ function mapStateToProps({cards}, props) {
     }
 }
 
-export default connect(mapStateToProps)(QuizView)
-
-const styles = StyleSheet.create({
-    text: {
-        fontSize: styling.defaultFontSize
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    progressIndicator: {
-        alignSelf: 'flex-start',
-        justifyContent: 'flex-start',
-        paddingLeft: 2
+function mapDispatchToProps(dispatch) {
+    return {
+        ...bindActionCreators(QuizActions, dispatch)
     }
-})
+}
+export default connect(mapStateToProps, mapDispatchToProps)(QuizView)
 
 const QuizNavigator = StackNavigator({
     [RoutingConstants.QUIZ_QUESTION_VIEW]: {

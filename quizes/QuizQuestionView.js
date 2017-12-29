@@ -2,45 +2,34 @@
  * © 2017 Michal Rohac, All Rights Reserved.
  */
 import React from "react";
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {StyleSheet, Text, View} from 'react-native'
 
+import * as QuizActions from './QuizActions'
 import * as RoutingConstants from './RoutingConstants'
 import {QUIZ_RESULT_VIEW} from './RoutingConstants'
 import styling from "../utils/styling";
 import Card from '../cards/Card'
 
-export default class QuizQuestionView extends React.Component {
-    state = {
-        quizStatus: {
-            success: 0,
-            fail: 0
-        }
-    }
+class QuizQuestionView extends React.Component {
     goNext(cardStatus) {
-        const {navigation} = this.props
-        const {quizStatus} = this.state
-        const {cards} = this.props.screenProps
-        const currentQuestionIndex = navigation.state.params.currentQuestionIndex
+        const {navigation, deck, cards, currentQuestionIndex, quizStatus, updateQuiz} = this.props
 
-        const newQuizStatus = {
-            success: cardStatus ? quizStatus.success + 1 : quizStatus.success,
-            fail: !cardStatus ? quizStatus.fail + 1 : quizStatus.fail
-        }
-        this.setState({
-            quizStatus: newQuizStatus
+        updateQuiz(deck.id, {
+            correctAnswers: quizStatus.correctAnswers + (cardStatus ? 1 : 0),
+            wrongAnswers: quizStatus.wrongAnswers + (!cardStatus ? 1 : 0)
         })
 
         if (currentQuestionIndex < cards.length - 1) {
             navigation.navigate(RoutingConstants.QUIZ_QUESTION_VIEW, {currentQuestionIndex: currentQuestionIndex + 1})
         } else {
-            navigation.navigate(QUIZ_RESULT_VIEW, {quizStatus: newQuizStatus})
+            navigation.navigate(QUIZ_RESULT_VIEW)
         }
     }
 
     render() {
-        const {navigation} = this.props
-        const {cards} = this.props.screenProps
-        const currentQuestionIndex = navigation.state.params.currentQuestionIndex
+        const {navigation, cards, currentQuestionIndex} = this.props
         const card = currentQuestionIndex < cards.length ? cards[currentQuestionIndex] : undefined
         return (
             <View style={styles.container}>
@@ -53,6 +42,23 @@ export default class QuizQuestionView extends React.Component {
         )
     }
 }
+
+function mapStateToProps({quizes}, props) {
+    const {navigation} = props
+    const {deck, cards} = props.screenProps
+    return {
+        ...props.screenProps, ...navigation.state.params,
+        quizStatus: deck && quizes[deck.id] ? quizes[deck.id] : {}
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        ...bindActionCreators(QuizActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizQuestionView)
 
 const styles = StyleSheet.create({
     text: {

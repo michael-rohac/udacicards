@@ -34,14 +34,5 @@
       }
     ]
   },
-  "quizes": {
-    "react": {
-      "correctAnswers": 0,
-      "wrongAnswers": 0
-    },
-    "javascript": {
-      "correctAnswers": 0,
-      "wrongAnswers": 0
-    }
-  }
+  "quizes": {}
 }

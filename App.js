@@ -12,13 +12,14 @@ import {LogerFactory, LOGGER_DEBUG} from './utils/logger'
 
 import {decks} from './decks/DeckReducer'
 import {cards} from './cards/CardReducer'
+import {quizes} from './quizes/QuizReducer'
 import {fetchDecks} from './decks/DeckActions'
 import {fetchCards} from './cards/CardActions'
 import DeckRouter from './decks/DeckRouter'
 import styling from './utils/styling'
 
 const logger = LogerFactory(LOGGER_DEBUG)
-const reducer = combineReducers({decks, cards})
+const reducer = combineReducers({decks, cards, quizes})
 const store = createStore(reducer);
 store.subscribe(() => syncReduxStateWithAsyncStorage(store.getState()))
 
@@ -62,7 +63,6 @@ const MainNavigator = TabNavigator({
         }
     }
 })
-
 
 export default class App extends React.Component {
     componentDidMount() {

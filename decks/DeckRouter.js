@@ -2,7 +2,7 @@
  * © 2017 Michal Rohac, All Rights Reserved.
  */
 import React from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import {StackNavigator} from 'react-navigation'
 import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons'
 import {black, gray, white} from '../utils/colors'
@@ -11,6 +11,7 @@ import * as RoutingConstants from './RoutingConstants'
 import DeckList from './DeckList'
 import DeckView from './DeckView'
 import QuizView from '../quizes/Quiz'
+import NewCardView from '../cards/NewCardView'
 
 export default () => {
     return (
@@ -49,7 +50,7 @@ const DecksNavigator = StackNavigator({
         })
     },
     [RoutingConstants.DECK_CARD_VIEW]: {
-        screen: () => <View><Text>Card View</Text></View>,
+        screen: NewCardView,
         navigationOptions: ({navigation}) => ({
             title: `Add ${navigation.state.params.deck.title} Card`,
             headerStyle: styles.navigationHeader,

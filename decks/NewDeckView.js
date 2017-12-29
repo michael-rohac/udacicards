@@ -4,7 +4,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView} from 'react-native';
 
 import AndroidButton from '../components/AndroidButton'
 import * as DeckActions from '../decks/DeckActions'
@@ -26,10 +26,11 @@ class NewDeckView extends React.Component {
             addDeck(deckTitle)
             navigation.navigate('DECKS')
         }
+        this.setState({deckTitle: ''})
     }
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Text style={styles.title}>What is the title of your new deck?</Text>
                 <TextInput
                     placeholder="Deck Title"
@@ -49,7 +50,7 @@ class NewDeckView extends React.Component {
                         }}
                     />
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

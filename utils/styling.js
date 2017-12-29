@@ -7,6 +7,6 @@ export default {
     tabNavigationHeight: 60,
     defaultNumberOfDecks: 4,
     deckSpacing: 3,
-    deckBackgroundColor: Colors.ligthBlue,
+    deckBackgroundColor: Colors.white,
     defaultFontSize: 16
 }

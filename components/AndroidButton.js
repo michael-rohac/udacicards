@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+
 import * as Colors from '../utils/colors'
 import styling from '../utils/styling'
 
@@ -57,6 +58,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginLeft: 2
     },
-
 })
 

@@ -1,7 +1,6 @@
 /**
  * © 2017 Michal Rohac, All Rights Reserved.
  */
-
 import React from 'react'
 import {Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {connect} from 'react-redux'

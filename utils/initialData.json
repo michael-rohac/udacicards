@@ -23,10 +23,25 @@
     ],
     "javascript": [
       {
+        "question": "What is JavaScript?",
+        "answer": "Statically typed language with strong type checking at compile time.",
+        "isCorrect": false
+      },
+      {
         "question": "What is closure?",
         "answer": "The combination of a function and the lexical environment within which that function was declared.",
         "isCorrect": true
       }
     ]
+  },
+  "quizes": {
+    "react": {
+      "correctAnswers": 0,
+      "wrongAnswers": 0
+    },
+    "javascript": {
+      "correctAnswers": 0,
+      "wrongAnswers": 0
+    }
   }
 }

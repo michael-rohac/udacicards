@@ -10,7 +10,7 @@ import {black, gray, white} from '../utils/colors'
 import * as RoutingConstants from './RoutingConstants'
 import DeckList from './DeckList'
 import DeckView from './DeckView'
-import QuizView from '../quizes/QuizView'
+import QuizView from '../quizes/Quiz'
 
 export default () => {
     return (

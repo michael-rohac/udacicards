@@ -22,7 +22,6 @@ class DeckList extends React.Component {
                           keyExtractor={(deck) => deck.id}
                           renderItem={renderDeck}
                           contentContainerStyle={{
-                              flex: 1,
                               alignItems: 'stretch',
                               justifyContent: 'flex-start'
                           }}/>

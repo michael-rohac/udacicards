@@ -23,7 +23,7 @@
     ],
     "javascript": [
       {
-        "question": "What is JavaScript?",
+        "question": "What type of language is JavaScript?",
         "answer": "Statically typed language with strong type checking at compile time.",
         "isCorrect": false
       },

@@ -21,7 +21,6 @@ class NewDeckView extends React.Component {
     handleSubmit() {
         const {navigation, addDeck} = this.props
         const {deckTitle} = this.state
-        debugger
         if (deckTitle) {
             addDeck(deckTitle)
             navigation.navigate('DECKS')

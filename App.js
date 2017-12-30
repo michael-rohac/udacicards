@@ -24,7 +24,8 @@ const reducer = combineReducers({decks, cards, quizes})
 const store = createStore(reducer);
 store.subscribe(() => syncReduxStateWithAsyncStorage(store.getState()))
 
-removeReduxStateFromAsyncStorage()
+// use this only in DEV mode in order to clean AsyncStore and start always with initial data
+// removeReduxStateFromAsyncStorage()
 
 const styles = StyleSheet.create({
     container: {

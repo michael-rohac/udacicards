@@ -32,6 +32,7 @@ class NewDeckView extends React.Component {
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Text style={styles.title}>What is the title of your new deck?</Text>
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     placeholder="Deck Title"
                     style={styles.textInput}
                     onChangeText={this.handleDeckTitleUpdate.bind(this)}

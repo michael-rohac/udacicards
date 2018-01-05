@@ -40,6 +40,7 @@ class NewCardView extends React.Component {
                 <Text style={styles.label}>What is your question?</Text>
                 <TextInput
                     placeholder="Question"
+                    underlineColorAndroid={'transparent'}
                     multiline={true}
                     blurOnSubmit={true}
                     style={styles.textInput}
@@ -49,6 +50,7 @@ class NewCardView extends React.Component {
                 <Text style={styles.label}>What is your proposed answer?</Text>
                 <TextInput
                     placeholder="Answer"
+                    underlineColorAndroid={'transparent'}
                     multiline={true}
                     blurOnSubmit={true}
                     style={styles.textInput}

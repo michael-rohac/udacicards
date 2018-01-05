@@ -10,7 +10,7 @@ import {black, gray, white} from '../utils/colors'
 import * as RoutingConstants from './RoutingConstants'
 import DeckList from './DeckList'
 import DeckView from './DeckView'
-import QuizView from '../quizes/Quiz'
+import QuizView from '../quizes/QuizView'
 import NewCardView from '../cards/NewCardView'
 
 export default () => {
@@ -59,7 +59,7 @@ const DecksNavigator = StackNavigator({
         })
     },
     [RoutingConstants.QUIZ_VIEW]: {
-        screen: ({navigation}) => <QuizView deck={navigation.state.params.deck}/>,
+        screen: ({navigation}) => <QuizView deck={navigation.state.params.deck} backToDeck={() => navigation.goBack()}/>,
         navigationOptions: ({navigation}) => ({
             title: `${navigation.state.params.deck.title} Quiz`,
             headerStyle: styles.navigationHeader,

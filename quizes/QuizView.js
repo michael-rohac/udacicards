@@ -17,9 +17,9 @@ class QuizView extends React.Component {
         resetQuiz(deck.id)
     }
     render() {
-        const {cards, deck} = this.props
+        const {cards, deck, backToDeck} = this.props
         return (
-            <QuizNavigator screenProps={{deck, cards}}/>
+            <QuizNavigator screenProps={{deck, cards, backToDeck}}/>
         )
     }
 }

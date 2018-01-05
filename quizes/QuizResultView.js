@@ -4,13 +4,23 @@
 
 import React from "react";
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {StyleSheet, Text, View} from 'react-native'
+
 import styling from "../utils/styling";
 import * as Colors from "../utils/colors";
+import AndroidButton from '../components/AndroidButton'
+import * as RoutingConstants from './RoutingConstants'
+import * as QuizActions from "./QuizActions";
 
 class QuizResultView extends React.Component {
+    handleRestartQuiz() {
+        const {navigation, deck, resetQuiz} = this.props
+        resetQuiz(deck.id)
+        navigation.navigate(RoutingConstants.QUIZ_QUESTION_VIEW, {currentQuestionIndex: 0})
+    }
     render() {
-        const {deck, cards, quizStatus} = this.props
+        const {deck, cards, quizStatus, backToDeck} = this.props
         const successPercentage = Math.round((quizStatus.correctAnswers / cards.length) * 10000) / 100
         return (
             <View style={styles.container}>
@@ -22,6 +32,28 @@ class QuizResultView extends React.Component {
                 <Text style={[styles.text, {color: successPercentage > 50 ? Colors.green : Colors.red}]}>
                     You've succeeded on {successPercentage}%
                 </Text>
+                <View style={styles.buttonBar}>
+                    <AndroidButton
+                        text="Back to Deck"
+                        onPress={backToDeck}
+                        styling={{
+                            backgroundColor: Colors.white,
+                            borderColor: Colors.black,
+                            color: Colors.black,
+                            fontSize: styling.defaultFontSize + 4
+                        }}
+                    />
+                    <AndroidButton
+                        text="Restart Quiz"
+                        onPress={this.handleRestartQuiz.bind(this)}
+                        styling={{
+                            backgroundColor: Colors.black,
+                            borderColor: Colors.black,
+                            color: Colors.white,
+                            fontSize: styling.defaultFontSize + 4
+                        }}
+                    />
+                </View>
             </View>
         )
     }
@@ -35,7 +67,13 @@ function mapStateToProps({quizes}, props) {
     }
 }
 
-export default connect(mapStateToProps)(QuizResultView)
+function mapDispatchToProps(dispatch) {
+    return {
+        ...bindActionCreators(QuizActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizResultView)
 
 const styles = StyleSheet.create({
     container: {
@@ -54,5 +92,10 @@ const styles = StyleSheet.create({
         fontSize: styling.defaultFontSize + 4,
         textAlign: 'center',
         padding: 10
-    }
+    },
+    buttonBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20
+    },
 })

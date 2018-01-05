@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 const MainNavigator = TabNavigator({
     DECKS: {
-        screen: () => <DeckRouter/>,
+        screen: ({navigation}) => <DeckRouter deck={navigation.state.params ? navigation.state.params.deck : null}/>,
         navigationOptions: {
             tabBarLabel: 'DECKS',
             style: styles.tabStyle

@@ -1,8 +1,6 @@
 /**
  * © 2017 Michal Rohac, All Rights Reserved.
  */
-import {nameToId} from '../utils/helpers'
-
 export const FETCH_DECKS = 'FETCH_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const REMOVE_DECK = 'REMOVE_DECK'
@@ -16,13 +14,10 @@ export function decks(state = {}, action) {
                 ...action.decks
             }
         case ADD_DECK:
-            const deckId = nameToId(action.deck.title)
+            const {deck} = action
             return {
                 ...state,
-                [deckId]: {
-                    id: deckId,
-                    title: action.deck.title
-                }
+                [deck.id]: deck
             }
         case REMOVE_DECK:
             let newState = {...state}

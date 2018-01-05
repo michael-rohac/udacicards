@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView} from 'react-native';
 
+import {nameToId} from '../utils/helpers'
 import AndroidButton from '../components/AndroidButton'
 import * as DeckActions from '../decks/DeckActions'
 import styling from '../utils/styling';
@@ -22,10 +23,14 @@ class NewDeckView extends React.Component {
         const {navigation, addDeck} = this.props
         const {deckTitle} = this.state
         if (deckTitle) {
-            addDeck(deckTitle)
-            navigation.navigate('DECKS')
+            const deck = {
+                id: nameToId(deckTitle),
+                title: deckTitle
+            }
+            addDeck(deck)
+            navigation.navigate('DECKS', {deck})
+            this.setState({deckTitle: ''})
         }
-        this.setState({deckTitle: ''})
     }
     render() {
         return (

@@ -8,6 +8,19 @@ import Deck from './Deck'
 import styling from "../utils/styling";
 
 class DeckList extends React.Component {
+    constructor(props) {
+        super(props)
+        const {initialDeck} = props
+        this.state = {initialDeck}
+    }
+    componentDidMount() {
+        const {initialDeck} = this.state
+        const {onPressHandler} = this.props
+        if (initialDeck) {
+            this.setState({initialDeck: null})
+            onPressHandler(initialDeck)
+        }
+    }
     render() {
         const {decks, onPressHandler} = this.props
         const renderDeck = ({item}) => {

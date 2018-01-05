@@ -10,10 +10,10 @@ export function fetchDecks(decks) {
     }
 }
 
-export function addDeck(title) {
+export function addDeck(deck) {
     return {
         type: ADD_DECK,
-        deck: {title}
+        deck
     }
 }
 

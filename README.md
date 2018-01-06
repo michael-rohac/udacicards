@@ -1,9 +1,17 @@
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
+## About Project
 
-Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
+This project was written by [Michal Rohac](https://github.com/michael-rohac) in order to demonstrate what I have learned in React course
+which is part of Udacity Nanodegree program. This project is third and last sample project focusing on understanding React-Native.
+Implemented code was implemented and tested on Andorid platform respectively Android simulator on Nexus 5X with API 23.
+
+This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app). How to perform common tasks
+is written in information below generated using create-react-native-app. Take into consideration that iOS Platform specific tasks are not applicable
+to this project since it's written for Android platform only. The most recent version of Create React Native App guide is available 
+[here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
 ## Table of Contents
 
+* [About Project](#about-project)
 * [Updating to New Releases](#updating-to-new-releases)
 * [Available Scripts](#available-scripts)
   * [npm start](#npm-start)

@@ -10,6 +10,7 @@ import * as QuizActions from './QuizActions'
 import * as RoutingConstants from './RoutingConstants'
 import {QUIZ_RESULT_VIEW} from './RoutingConstants'
 import styling from "../utils/styling";
+import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
 import Card from '../cards/Card'
 
 class QuizQuestionView extends React.Component {
@@ -27,8 +28,12 @@ class QuizQuestionView extends React.Component {
             navigation.navigate(QUIZ_RESULT_VIEW)
         }
     }
+    componentDidMount() {
+        clearLocalNotification()
+            .then(setLocalNotification)
+    }
     render() {
-        const {navigation, cards, currentQuestionIndex} = this.props
+        const {cards, currentQuestionIndex} = this.props
         const card = currentQuestionIndex < cards.length ? cards[currentQuestionIndex] : undefined
         return (
             <View style={styles.container}>

@@ -4,10 +4,7 @@ import {Provider} from 'react-redux'
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {TabNavigator} from 'react-navigation'
 
-import {
-    getReduxStateFromAsyncStorage, removeReduxStateFromAsyncStorage,
-    syncReduxStateWithAsyncStorage
-} from './utils/helpers'
+import {getReduxStateFromAsyncStorage, setLocalNotification, syncReduxStateWithAsyncStorage} from './utils/helpers'
 import {LogerFactory, LOGGER_DEBUG} from './utils/logger'
 
 import {decks} from './decks/DeckReducer'
@@ -66,6 +63,7 @@ const MainNavigator = TabNavigator({
 
 export default class App extends React.Component {
     componentDidMount() {
+        setLocalNotification()
         getReduxStateFromAsyncStorage()
             .then((state) => {
                 if (state && state.decks) {

@@ -27,7 +27,6 @@ class QuizQuestionView extends React.Component {
             navigation.navigate(QUIZ_RESULT_VIEW)
         }
     }
-
     render() {
         const {navigation, cards, currentQuestionIndex} = this.props
         const card = currentQuestionIndex < cards.length ? cards[currentQuestionIndex] : undefined

@@ -11,8 +11,7 @@ import * as Colors from '../utils/colors'
 
 export default class Card extends React.Component {
     state = {
-        typedAnswer: '',
-        showButtonBar: false,
+        showAnswer: false,
         status: undefined
     }
     showButtonBar() {
@@ -27,86 +26,92 @@ export default class Card extends React.Component {
         })
     }
 
-    typeAnswer() {
-        const {card} = this.props
-        const {typedAnswer} = this.state
-        if (card.answer && typedAnswer.length < card.answer.length) {
-            const newTypedAnswer = typedAnswer + card.answer.substr(typedAnswer.length, 1)
-            if (card.answer.length === newTypedAnswer.length) {
-                setTimeout(this.showButtonBar.bind(this), 500)
-            }
-            this.setState({
-                typedAnswer: newTypedAnswer
-            })
-        }
+    showAnswer() {
+        this.setState({showAnswer: true})
     }
-
+    answerComponent() {
+        const {card} = this.props
+        const {showAnswer, status} = this.state
+        return showAnswer ? (
+            <View>
+                <Text style={styles.answer}>{card.answer}</Text>
+                <View style={styles.buttonBar}>
+                    <AndroidButton
+                        text="Correct"
+                        disabled={status ? true : false}
+                        styling={{
+                            backgroundColor: Colors.green,
+                            borderColor: Colors.green,
+                            color: Colors.white
+                        }}
+                        onPress={() => this.showStatus(card.isCorrect)}
+                    />
+                    <AndroidButton
+                        text="Incorrect"
+                        disabled={status ? true : false}
+                        styling={{
+                            backgroundColor: Colors.red,
+                            borderColor: Colors.red,
+                            color: Colors.white
+                        }}
+                        onPress={() => this.showStatus(!card.isCorrect)}
+                    />
+                </View>
+            </View>
+        ) : (
+            <AndroidButton
+                text="Answer"
+                onPress={this.showAnswer.bind(this)}
+                styling={{
+                    backgroundColor: Colors.green,
+                    borderColor: Colors.green,
+                    color: Colors.white,
+                    fontSize: styling.defaultFontSize + 4
+                }}
+            />
+        )
+    }
+    statusComponent() {
+        const {goNext} = this.props
+        const {status} = this.state
+        if (!status) return
+        return status.ok ? (
+            <View style={[styles.statusBar, {backgroundColor: Colors.green}]}>
+                <AndroidButton
+                    icon={<FontAwesome name='check' size={STATUS_FONT_SIZE} style={styles.correct}/>}
+                    text='YES!   GO NEXT >>'
+                    onPress={() => goNext(status.ok)}
+                    styling={{
+                        fontSize: STATUS_FONT_SIZE,
+                        color: Colors.white,
+                        backgroundColor: Colors.green,
+                        borderColor: Colors.green
+                    }}
+                />
+            </View>
+        ) : (
+            <View style={[styles.statusBar, {backgroundColor: Colors.red}]}>
+                <AndroidButton
+                    icon={<FontAwesome name='exclamation-circle' size={STATUS_FONT_SIZE} style={styles.incorrect}/>}
+                    text=' NO!   GO NEXT >>'
+                    onPress={() => goNext(status.ok)}
+                    styling={{
+                        fontSize: STATUS_FONT_SIZE,
+                        color: Colors.white,
+                        backgroundColor: Colors.red,
+                        borderColor: Colors.red
+                    }}
+                />
+            </View>
+        )
+    }
     render() {
-        const {card, goNext} = this.props
-        const {typedAnswer, showButtonBar, status} = this.state
-        if (card.answer && typedAnswer.length < card.answer.length) {
-            setTimeout(this.typeAnswer.bind(this), 20)
-        }
+        const {card} = this.props
         return (
             <View style={styles.container}>
                 <Text style={styles.question}>{card.question}</Text>
-                <Text style={styles.answer}>{typedAnswer}</Text>
-                {showButtonBar && (
-                    <View style={styles.buttonBar}>
-                        <AndroidButton
-                            text="Correct"
-                            styling={{
-                                backgroundColor: Colors.green,
-                                borderColor: Colors.green,
-                                color: Colors.white
-                            }}
-                            onPress={() => this.showStatus(card.isCorrect)}
-                        />
-                        <AndroidButton
-                            text="Incorrect"
-                            styling={{
-                                backgroundColor: Colors.red,
-                                borderColor: Colors.red,
-                                color: Colors.white
-                            }}
-                            onPress={() => this.showStatus(!card.isCorrect)}
-                        />
-                    </View>
-                )}
-                {status && (
-                    <View style={{flexDirection: 'row'}}>
-                        {status.ok && (
-                            <View style={[styles.statusBar, {backgroundColor: Colors.green}]}>
-                                <AndroidButton
-                                    icon={<FontAwesome name='check' size={STATUS_FONT_SIZE} style={styles.correct}/>}
-                                    text='YES!   GO NEXT >>'
-                                    onPress={() => goNext(status.ok)}
-                                    styling={{
-                                        fontSize: STATUS_FONT_SIZE,
-                                        color: Colors.white,
-                                        backgroundColor: Colors.green,
-                                        borderColor: Colors.green
-                                    }}
-                                />
-                            </View>
-                        )}
-                        {!status.ok && (
-                            <View style={[styles.statusBar, {backgroundColor: Colors.red}]}>
-                                <AndroidButton
-                                    icon={<FontAwesome name='exclamation-circle' size={STATUS_FONT_SIZE} style={styles.incorrect}/>}
-                                    text=' NO!   GO NEXT >>'
-                                    onPress={() => goNext(status.ok)}
-                                    styling={{
-                                        fontSize: STATUS_FONT_SIZE,
-                                        color: Colors.white,
-                                        backgroundColor: Colors.red,
-                                        borderColor: Colors.red
-                                    }}
-                                />
-                            </View>
-                        )}
-                    </View>
-                )}
+                {this.answerComponent()}
+                {this.statusComponent()}
             </View>
         )
     }

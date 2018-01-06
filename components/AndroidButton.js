@@ -8,9 +8,13 @@ import * as Colors from '../utils/colors'
 import styling from '../utils/styling'
 
 export default (props) => {
-    const {onPress, text, style, icon, styling} = props;
+    const {onPress, text, style, icon, styling, disabled = false} = props;
+
     return (
-        <TouchableOpacity style={[styles.AndroidBtn, customizedAndroidBtnStyling(styling)]} onPress={onPress}>
+        <TouchableOpacity style={[styles.AndroidBtn, customizedAndroidBtnStyling(styling)]}
+                          activeOpacity={disabled ? 1 : 0.7}
+                          onPress={() => !disabled && onPress()}
+                          disabled={disabled ? true : false}>
             <View style={{flexDirection: 'row', alignItems: 'center', padding: 3}}>
                 {icon && icon}
                 <Text style={[styles.AndroidBtnText, customizedBtnTextStyling(styling)]}>{text}</Text>

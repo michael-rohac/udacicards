@@ -7,25 +7,23 @@ import {connect} from 'react-redux'
 import styling from '../utils/styling'
 import * as Colors from '../utils/colors'
 
-class Deck extends React.Component {
-    render() {
-        const {deck, cards, deckComponent, onPressHandler, numberOfDecksOnPage} = this.props
-        return (
-            <TouchableOpacity
-                style={[styles.deck, {height: deckHeight(numberOfDecksOnPage || styling.defaultNumberOfDecks)}]}
-                onPress={() => this.props.onPressHandler && onPressHandler(deck)}>
-                <View>
-                    <Text style={styles.title}>{deck.title}</Text>
-                    <Text style={styles.subtitle}>{`${cards} card${cards > 1 ? 's' : ''}`}</Text>
+const Deck = (props) => {
+    const {deck, cards, deckComponent, onPressHandler, numberOfDecksOnPage} = props
+    return (
+        <TouchableOpacity
+            style={[styles.deck, {height: deckHeight(numberOfDecksOnPage || styling.defaultNumberOfDecks)}]}
+            onPress={() => onPressHandler && onPressHandler(deck)}>
+            <View>
+                <Text style={styles.title}>{deck.title}</Text>
+                <Text style={styles.subtitle}>{`${cards} card${cards > 1 ? 's' : ''}`}</Text>
+            </View>
+            {deckComponent && (
+                <View style={styles.deckComponent}>
+                    {deckComponent(deck)}
                 </View>
-                {deckComponent && (
-                    <View style={styles.deckComponent}>
-                        {deckComponent(deck)}
-                    </View>
-                )}
-            </TouchableOpacity>
-        )
-    }
+            )}
+        </TouchableOpacity>
+    )
 }
 
 function mapStateToProps({cards}, props) {

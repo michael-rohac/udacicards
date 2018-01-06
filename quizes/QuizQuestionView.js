@@ -10,7 +10,6 @@ import * as QuizActions from './QuizActions'
 import * as RoutingConstants from './RoutingConstants'
 import {QUIZ_RESULT_VIEW} from './RoutingConstants'
 import styling from "../utils/styling";
-import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
 import Card from '../cards/Card'
 
 class QuizQuestionView extends React.Component {
@@ -27,10 +26,6 @@ class QuizQuestionView extends React.Component {
         } else {
             navigation.navigate(QUIZ_RESULT_VIEW)
         }
-    }
-    componentDidMount() {
-        clearLocalNotification()
-            .then(setLocalNotification)
     }
     render() {
         const {cards, currentQuestionIndex} = this.props

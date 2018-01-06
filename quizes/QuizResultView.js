@@ -8,16 +8,24 @@ import {bindActionCreators} from 'redux'
 import {StyleSheet, Text, View} from 'react-native'
 
 import styling from "../utils/styling";
+import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
 import * as Colors from "../utils/colors";
 import AndroidButton from '../components/AndroidButton'
 import * as RoutingConstants from './RoutingConstants'
 import * as QuizActions from "./QuizActions";
 
 class QuizResultView extends React.Component {
+    constructor(props) {
+        super(props)
+        this.handleRestartQuiz.bind(this)
+    }
     handleRestartQuiz() {
         const {navigation, deck, resetQuiz} = this.props
         resetQuiz(deck.id)
         navigation.navigate(RoutingConstants.QUIZ_QUESTION_VIEW, {currentQuestionIndex: 0})
+    }
+    componentDidMount() {
+        clearLocalNotification().then(setLocalNotification)
     }
     render() {
         const {deck, cards, quizStatus, backToDeck} = this.props
@@ -45,7 +53,7 @@ class QuizResultView extends React.Component {
                     />
                     <AndroidButton
                         text="Restart Quiz"
-                        onPress={this.handleRestartQuiz.bind(this)}
+                        onPress={() => this.handleRestartQuiz()}
                         styling={{
                             backgroundColor: Colors.black,
                             borderColor: Colors.black,

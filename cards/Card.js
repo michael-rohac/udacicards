@@ -10,6 +10,12 @@ import styling from '../utils/styling'
 import * as Colors from '../utils/colors'
 
 export default class Card extends React.Component {
+    constructor(props) {
+        super(props)
+        this.showButtonBar.bind(this)
+        this.showStatus.bind(this)
+        this.showAnswer.bind(this)
+    }
     state = {
         showAnswer: false,
         status: undefined
@@ -61,7 +67,7 @@ export default class Card extends React.Component {
         ) : (
             <AndroidButton
                 text="Answer"
-                onPress={this.showAnswer.bind(this)}
+                onPress={() => this.showAnswer()}
                 styling={{
                     backgroundColor: Colors.green,
                     borderColor: Colors.green,
